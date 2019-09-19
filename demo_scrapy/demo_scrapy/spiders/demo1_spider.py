@@ -1,15 +1,22 @@
 import scrapy
 
-class CrowdfundSpider(scrapy.Spider): # Use the Spider class provided by Scrapy and make a subclass out of it called CrowdfundSpider
-    name = "fundrazr_accidents" # This is the name of the spider, which will be used to run the spider when `scrapy crawl name_of_spider` is used
-    start_urls = ["https://fundrazr.com/find?category=Accidents"]
 
-def parse(self, response):
-    campaign_titles = response.xpath('//h2//a[starts-with(@href, "//fund")]/text()').extract() 
-    urls = []
-    for href in response.xpath('//h2//a//@href'):
-        url = "https:" + href.extract()
-        urls.append(url)
+class CrowdfundSpider(scrapy.Spider):
+    name = "fundrazr_campaigns"
+    allowed_domains = ["fundrazr.com"]
+    start_urls = [
+        'https://fundrazr.com/find?category=Accidents'
+    ]
 
-    yield {'Campaign titles': campaign_titles, 'URL': urls}
-    
+    def parse(self, response):
+        widget_tall = response.xpath('//*[@class="widget tall"]')
+        for campaign in widget_tall:
+            campaign_message = campaign.xpath('.//@data-message').extract() # Use extract_first() to get only the first campaign
+            owner_name = campaign.xpath('.//@data-ownername').extract()
+            
+            yield{'Campaign message': campaign_message, 'Owner name' : owner_name}
+            
+        next_page_url = response.xpath('//*[@class="next"]/a/@href').extract_first()
+        absolute_next_page_url = response.urljoin(next_page_url)
+        yield scrapy.Request(absolute_next_page_url)
+
