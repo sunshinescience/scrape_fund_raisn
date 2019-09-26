@@ -4,8 +4,43 @@ class CrowdfundSpider(scrapy.Spider):
     name = "fundrazr_campaigns2"
     allowed_domains = ["fundrazr.com"]
     start_urls = [
-        'https://fundrazr.com/find?category=Accidents'
-    ]
+                'https://fundrazr.com/find?category=Accidents',
+                'https://fundrazr.com/find?category=Alumni',
+                'https://fundrazr.com/find?category=Animals',
+                'https://fundrazr.com/find?category=Arts',
+                'https://fundrazr.com/find?category=Business',
+                'https://fundrazr.com/find?category=Celebrations',
+                'https://fundrazr.com/find?category=Community',
+                'https://fundrazr.com/find?category=Education',
+                'https://fundrazr.com/find?category=Faith',
+                'https://fundrazr.com/find?category=Family',
+                'https://fundrazr.com/find?category=Health',
+                'https://fundrazr.com/find?category=Legal',
+                'https://fundrazr.com/find?category=Memorials',
+                'https://fundrazr.com/find?category=Non-profits',
+                'https://fundrazr.com/find?category=Politics',
+                'https://fundrazr.com/find?category=Sports',
+                'https://fundrazr.com/find?category=Travel',
+                'https://fundrazr.com/find?category=Veterans',
+                'https://fundrazr.com/find?category=Accidents',
+                'https://fundrazr.com/find?category=Alumni',
+                'https://fundrazr.com/find?category=Animals',
+                'https://fundrazr.com/find?category=Arts',
+                'https://fundrazr.com/find?category=Business',
+                'https://fundrazr.com/find?category=Celebrations',
+                'https://fundrazr.com/find?category=Community',
+                'https://fundrazr.com/find?category=Education',
+                'https://fundrazr.com/find?category=Faith',
+                'https://fundrazr.com/find?category=Family',
+                'https://fundrazr.com/find?category=Health',
+                'https://fundrazr.com/find?category=Legal',
+                'https://fundrazr.com/find?category=Memorials',
+                'https://fundrazr.com/find?category=Non-profits',
+                'https://fundrazr.com/find?category=Politics',
+                'https://fundrazr.com/find?category=Sports',
+                'https://fundrazr.com/find?category=Travel',
+                'https://fundrazr.com/find?category=Veterans'
+                ]
 
     def parse(self, response):
         category = response.xpath('//li[@class="active"]//a[starts-with(@href, "https://fundrazr.com/find?category=")]/text()').extract()

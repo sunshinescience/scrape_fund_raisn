@@ -11,4 +11,5 @@ import scrapy
 class DemoScrapyItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    campaign_message = scrapy.Field()
+    owner_name = scrapy.Field()
