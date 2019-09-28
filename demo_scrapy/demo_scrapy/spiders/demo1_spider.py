@@ -27,10 +27,12 @@ class CrowdfundSpider(scrapy.Spider):
             for href in campaign.xpath('.//@data-campaignurl'):
                 base_url = "https:" + href.extract()
                 url.append(base_url)
-
+    
             yield{'Category': category, 'Campaign title': campaign_title, 'Owner name' : owner_name, 'Location': location, 'Currency symbol': currency_symbol, 'Amount raised': amount_raised, 'Duration running': duration_running, 'Duration running label': duration_label, 'URL': url, 'Campaign description': campaign_message}
 
         next_page_url = response.xpath('//*[@class="next"]/a/@href').extract_first()
         absolute_next_page_url = response.urljoin(next_page_url)
         yield scrapy.Request(absolute_next_page_url)
+        
+
 
