@@ -1,6 +1,7 @@
 import scrapy
 from scrapy.loader import ItemLoader
 from demo_scrapy.items import DemoScrapyItem
+from datetime import datetime
 
 class CrowdfundSpider(scrapy.Spider):
     name = 'fundrazr_campaigns3'
@@ -20,8 +21,15 @@ class CrowdfundSpider(scrapy.Spider):
 
     def parse_campaign(self, response):
         l = ItemLoader(item=DemoScrapyItem(), repsonse=response)
-        #campaign_message = response.xpath('.//@data-message').extract() 
-        #owner_name = response.xpath('.//@data-ownername').extract()
+
+        # Obtain the campaign description
+        message = response.xpath("//div[contains(@id, 'full-story')]//text()").extract()
+        campaign_msg = []
+        for i in message:
+            if len(i.strip()) > 0:
+                campaign_msg.append(i.strip())
+        campaign_message = (''.join(campaign_msg))
+
         raised_progress = response.xpath('//span[@class="raised-progress"]/text()').extract_first()
         goal = ((response.xpath('//*[@id="campaign-stats"]/div[1]/span[3]/text()[2]').extract_first()).strip()).split(' ')[1]
         campaign_title = (response.xpath('//div[@id="campaign-title"]/text()').extract_first()).strip()
@@ -32,11 +40,15 @@ class CrowdfundSpider(scrapy.Spider):
         number_contributers = response.xpath('//span[@class="donation-count stat"]/text()').extract_first() 
         location = response.xpath('//span/a[@class="muted nowrap"]/text()').extract_first()
         owner_name = response.xpath('//span/a[@class="name subtle-link bold"]/text()').extract_first()
-        datetime = (response.xpath('//span[@class="stats-label"]/a/@data-timestamp').extract_first()).rstrip("0")
+        timestamp = (response.xpath('//span[@class="stats-label"]/a/@data-timestamp').extract_first()).rstrip("0") # Getting the timestamp and removing trailing zeros
+        datetime_object = datetime.fromtimestamp(int(timestamp))
+        hour_launched = (str(datetime_object.hour))
+        month_launched = (str(datetime_object.month))
+        day_launched = (str(datetime_object.day))
+        day_of_week_launched = (str(datetime_object.weekday()))
+        url = response.xpath('//meta[@property="og:url"]/@content').extract_first()
 
-
-        #l.add_value('campaign_message', campaign_message)
-        #l.add_value('owner_name', owner_name)
+        l.add_value('campaign_message', campaign_message)
         l.add_value('raised_progress', raised_progress)
         l.add_value('goal', goal)
         l.add_value('campaign_title', campaign_title)
@@ -47,11 +59,13 @@ class CrowdfundSpider(scrapy.Spider):
         l.add_value('number_contributers', number_contributers)
         l.add_value('location', location)
         l.add_value('owner_name', owner_name)
-        l.add_value('datetime', datetime)
-        #l.add_value('',)
-        #l.add_value('',)
-        #l.add_value('',)
-        #l.add_value('',)
+        #l.add_value('timestamp', timestamp)
+        l.add_value('hour_launched', hour_launched)
+        #l.add_value('datetime_object', datetime_object)
+        l.add_value('month_launched', month_launched)
+        l.add_value('day_launched', day_launched)
+        l.add_value('day_of_week_launched', day_of_week_launched)
+        l.add_value('url', url)
 
         return l.load_item()
 

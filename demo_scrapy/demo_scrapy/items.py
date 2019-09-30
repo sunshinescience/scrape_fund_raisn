@@ -9,10 +9,7 @@ import scrapy
 
 
 class DemoScrapyItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    #campaign_message = scrapy.Field()
-    #owner_name = scrapy.Field()
+    campaign_message = scrapy.Field()
     #category = scrapy.Field()
     raised_progress = scrapy.Field()
     goal = scrapy.Field()
@@ -24,6 +21,10 @@ class DemoScrapyItem(scrapy.Item):
     number_contributers = scrapy.Field()
     location = scrapy.Field()
     owner_name = scrapy.Field()
-    datetime = scrapy.Field()
+    hour_launched = scrapy.Field()
+    month_launched = scrapy.Field()
+    day_launched = scrapy.Field()
+    day_of_week_launched = scrapy.Field()
+    url = scrapy.Field()
     
     
