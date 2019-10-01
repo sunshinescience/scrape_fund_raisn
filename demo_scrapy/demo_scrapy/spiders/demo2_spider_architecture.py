@@ -116,4 +116,6 @@ class CrowdfundSpider(scrapy.Spider):
             pass
 
         return l.load_item()
+
+    
  
