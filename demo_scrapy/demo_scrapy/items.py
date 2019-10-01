@@ -7,17 +7,17 @@
 
 import scrapy
 
-
 class DemoScrapyItem(scrapy.Item):
     campaign_message = scrapy.Field()
+    
     #category = scrapy.Field()
     raised_progress = scrapy.Field()
     goal = scrapy.Field()
     campaign_title = scrapy.Field()
     currency_symbol = scrapy.Field()
-    amount_raised = scrapy.Field()
+    currency_raised = scrapy.Field()
     duration_running = scrapy.Field()
-    duration_label = scrapy.Field()
+    duration_running_label = scrapy.Field()
     number_contributers = scrapy.Field()
     location = scrapy.Field()
     owner_name = scrapy.Field()

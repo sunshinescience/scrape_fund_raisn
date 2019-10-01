@@ -32,7 +32,7 @@ class CrowdfundSpider(scrapy.Spider):
 
         next_page_url = response.xpath('//*[@class="next"]/a/@href').extract_first()
         absolute_next_page_url = response.urljoin(next_page_url)
-        yield scrapy.Request(absolute_next_page_url)
+        yield scrapy.Request(absolute_next_page_url) # Scrapy uses requests to ask for a page and gets responses from the webserver.
         
 
 

@@ -15,6 +15,11 @@ SPIDER_MODULES = ['demo_scrapy.spiders']
 NEWSPIDER_MODULE = 'demo_scrapy.spiders'
 
 
+FEED_EXPORT_FIELDS = ["campaign_title", "campaign_message", "owner_name", "url", "raised_progress", "goal", "currency_symbol", 
+                    "currency_raised", "duration_running", "duration_running_label", "number_contributers", "location", "month_launched", 
+                    "day_launched", "hour_launched", "day_of_week_launched"]
+
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'demo_scrapy (+http://www.yourdomain.com)'
 
